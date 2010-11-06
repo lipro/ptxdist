@@ -107,6 +107,14 @@ choice
 		select ARCH_SUPPORTS_ENDIAN_BIG
 		help
 		  This is support for the SuperH architecture.
+
+	config ARCH_Z80
+		bool "Z80 8 bit "
+		select ARCH_SUPPORTS_ENDIAN_LITTLE
+		help
+		  This is support for the Zilog Z80 processors.
+		  Note: This covers the 8bit family only, they are not
+		  intended to be used with Linux. Bare metall only.
 endchoice
 
 #
@@ -268,6 +276,7 @@ config ARCH_STRING
 	default "cris"			if ARCH_CRIS
 	default "parisc"		if ARCH_PARISC
 	default "sh"			if ARCH_SH
+	default "z80"			if ARCH_Z80
 
 # ----------------------------------------------------------------------------
 
