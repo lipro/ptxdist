@@ -101,6 +101,9 @@ ptxd_init_ptxdist_path() {
     PTXDIST_PATH_PLATFORMS="${PTXDIST_PATH//://platforms:}"
     export PTXDIST_PATH_PLATFORMS
 
+    PTXDIST_PATH_PLATFORMS_XLBSP="${PTXDIST_PATH_PLATFORMS//://xlbsp:}"
+    export PTXDIST_PATH_PLATFORMS_XLBSP
+
     ptxd_init_ptxdist_path_sysroot
 }
 
