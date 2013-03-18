@@ -1,0 +1,84 @@
+## SECTION=image
+
+menuconfig IMAGE_OXNASBLOB
+	bool
+	select HOST_OXNAS_TOOLS
+	depends on ARCH_ARM
+	prompt "Generate OXNASBLOB Images     "
+	help
+	  Generate a PIC executable blob (combined  images) that would
+	  accept by the OXNAS boot rom in Oxford Semiconductors OXE800
+	  and OXE810.
+
+if IMAGE_OXNASBLOB
+
+config IMAGE_OXNASBLOB_U_BOOT
+	bool
+	depends on U_BOOT
+	prompt "Generate images/u-boot-oxnas"
+	default y
+	help
+	  Generate a PIC executable blob tagged for OXNAS boot rom that
+	  will execute the U-Boot image from FLASH or SATA.
+
+config IMAGE_OXNASBLOB_SETUP_MBR
+	bool
+	depends on IMAGE_OXNASBLOB_U_BOOT
+	select IMAGE_HD
+	prompt "Write boot loader into OXNAS boot area (setup MBR)"
+	help
+	  Generate and setup the primary and the secondary OXNAS boot rom
+	  parameters in MBR and write the selected boot loader image into
+	  the disk image.
+
+config IMAGE_OXNASBLOB_STAGE1
+	string
+	default "u-boot-oxnas.bin"		if IMAGE_OXNASBLOB_U_BOOT
+	default ""
+
+config IMAGE_OXNASBLOB_STAGE1_PRISECT_OFFS
+	int
+	default 1
+
+config IMAGE_OXNASBLOB_STAGE1_PRISECT_SIZE
+	int
+	default 238
+
+config IMAGE_OXNASBLOB_STAGE1_SECSECT_OFFS
+	int
+	default 10608
+
+config IMAGE_OXNASBLOB_STAGE1_SECSECT_SIZE
+	int
+	default 238
+
+config IMAGE_OXNASBLOB_SETUP_KERNEL
+	bool
+	depends on IMAGE_OXNASBLOB_U_BOOT
+	depends on IMAGE_KERNEL
+	select IMAGE_OXNASBLOB_SETUP_MBR
+	select IMAGE_HD
+	prompt "Write kernel into OXNAS boot area"
+	help
+	  Setup the primary and the secondary OXNAS boot area (the
+	  space before the first partition) with the linux kernel
+	  image so that U-Boot can load and start the kernel from
+	  there.
+
+config IMAGE_OXNASBLOB_KERNEL_PRISECT_OFFS
+	int
+	default 300
+
+config IMAGE_OXNASBLOB_KERNEL_PRISECT_SIZE
+	int
+	default 5700
+
+config IMAGE_OXNASBLOB_KERNEL_SECSECT_OFFS
+	int
+	default 10862
+
+config IMAGE_OXNASBLOB_KERNEL_SECSECT_SIZE
+	int
+	default 5700
+
+endif
