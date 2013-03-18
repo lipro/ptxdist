@@ -1,0 +1,15 @@
+## SECTION=hosttools_platform
+
+config HOST_OXNAS_TOOLS
+	tristate
+	default ALLYES
+	help
+	  OXNAS tools provides a collection of small host programs you
+	  need for cross development target the Oxford Semiconductors
+	  OXE8x0 SATA network controller (OXNAS).
+
+	  If you want to generate especially payload blobs for the OXNAS
+	  boot rom you will need the program mkoxnasblob from this tool
+	  collection. If you want to setup disk images that can understand
+	  by the OXNAS boot rom you will need the program setupoxnasmbr
+	  from this tool collection.
